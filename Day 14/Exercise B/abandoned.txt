@@ -1,0 +1,24 @@
+found, l_len, p, s = False, len(new_r_list), 1, 0
+
+while not found and p < int(l_len / 2):
+    print(l_len, p, s)
+    
+    period, found, i = new_r_list[s : p + s], True, 0
+    
+    cycles = int(l_len / p)
+    
+    while found and i < cycles - 1:
+        if period != new_r_list[i * p : (i + 1) * p]:
+            found = False
+        
+        i += 1
+    
+    if not found:
+        s += 1
+        
+        if s == l_len - p:
+            s = 0
+            
+            p += 1
+
+print(len(period), len(new_r_list), len(r_list))
