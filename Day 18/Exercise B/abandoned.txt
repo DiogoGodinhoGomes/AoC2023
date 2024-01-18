@@ -1,0 +1,23 @@
+for c in range(len(corners)):
+    trns, add, rmv = [], 0, 0
+    
+    for i, elem in enumerate(corners[c][1]):
+        if elem not in lims:
+            trns.append(1)
+        else:
+            trns.remove(0)
+    
+    for i in range(int(len(trns) / 2)):
+        if trns[2 * i] + trns[2 * i + 1] == 2:
+            lims.append(trns[2 * i])
+            
+            lims.append(trns[2 * i + 1])
+    
+    print(lims)
+    print(trns)
+    print(corners[c][1])
+    
+    lims.sort()
+    
+    print(corners[c][0], lims)
+    print()
