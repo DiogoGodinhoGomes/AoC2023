@@ -1,0 +1,144 @@
+import time as tm
+
+paths = []
+
+for i, s in enumerate(stones):
+    n_path = []
+    
+    for t in range(11):
+        n_path.append((s.px + t * s.vx, s.py + t * s.vy, s.pz + t * s.vz))
+    
+    paths.append(n_path)
+
+i, dtnr = 0, {}
+
+while i < len(paths):
+    j = 0
+    
+    while j < len(paths[i]):
+        k = i + 1
+        
+        while k < len(paths):
+            l = 0
+            
+            while l < len(paths[k]):
+                n = (paths[i][j][0] - paths[k][l][0], paths[i][j][1] - paths[k][l][1], paths[i][j][2] - paths[k][l][2])
+                
+                if n not in dtnr:
+                    dtnr[n] = 1
+                else:
+                    dtnr[n] += 1
+                
+                '''
+                nn = (-n[0], -n[1], -n[2])
+                
+                if nn not in dtnr:
+                    dtnr[nn] = 1
+                else:
+                    dtnr[nn] += 1
+                '''
+                
+                l += 1
+            
+            k += 1
+        
+        j += 1
+    
+    i += 1
+
+'''
+n_dtnr = {}
+
+for i in dtnr:
+    if dtnr[i] not in n_dtnr:
+        n_dtnr[dtnr[i]] = 1
+    else:
+        n_dtnr[dtnr[i]] += 1
+
+total = 0
+
+for i in n_dtnr:
+    print(i, n_dtnr[i])
+    
+    total += n_dtnr[i]
+
+print(total)
+'''
+
+for i in dtnr:
+    print(i)
+    
+    tm.sleep(0.5)
+
+##################################################
+
+import copy as cp
+import time as tm
+import numpy as np
+
+dtnr = {}
+
+for i in range(len(stones)):
+    for j in range(i):
+        dtnr[(i, j)] = dtnr[(j, i)]
+        
+    for j in range(i + 1, len(stones)):
+        pa, pb = stones[i].p(), stones[j].p()
+        
+        va, vb = stones[i].v(), stones[j].v()
+        
+        pab, vab = fc.pl(pa, pb, 1.0, -1.0), fc.pl(va, vb, 1.0, -1.0)
+        
+        t = max(0, -fc.dt(pab, vab) / fc.dt(vab, vab))
+        
+        nvab = fc.pl(fc.pl(pb, vb, 1.0, t), fc.pl(pa, va, 1.0, t), 1.0, -1.0)
+        
+        d = pow(fc.dt(nvab, nvab), 0.5)
+        
+        dtnr[(i, j)] = [t, d, nvab]
+
+f, l, v = [], [], list(dtnr.keys())[0][0]
+
+for e in dtnr:
+    if e[0] == v:
+        l.append([e[1], dtnr[e][0], dtnr[e][1]])
+    else:
+        f.append(l)
+        
+        l, v = [], e[0]
+        
+        l.append([e[1], dtnr[e][0], dtnr[e][1]])
+
+f.append(l)
+
+f, s = np.array(f), [0]
+
+for i, e in enumerate(f):
+    f[i] = cp.deepcopy(e[e[:, 2].argsort()])
+    
+    for c in f[i][:5]:
+        print(list(c))
+    
+    print()
+    
+    tm.sleep(2)
+
+while len(s) < len(f):
+    c = set([s[0], s[-1]])
+    
+    for i in c:
+        for j in range(2):
+            if f[i][j][0] not in s:
+                if s.index(i) == 0:
+                    s.insert(0, int(f[i][j][0]))
+                elif s.index(i) == len(s) - 1:
+                    s.append(int(f[i][j][0]))
+            elif i not in s:
+                if s.index(f[i][j][0]) == 0:
+                    s.insert(0, i)
+                elif s.index(f[i][j][0]) == len(s) - 1:
+                    s.append(i)
+    
+    print(s)
+    
+    tm.sleep(1)

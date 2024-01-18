@@ -1,0 +1,41 @@
+a, u, v = list(dtnr), [list(dtnr.keys())[3]], []
+
+dtnr["hfx"].remove("pzl")
+dtnr["pzl"].remove("hfx")
+
+dtnr["bvb"].remove("cmg")
+dtnr["cmg"].remove("bvb")
+
+dtnr["nvd"].remove("jqt")
+dtnr["jqt"].remove("nvd")
+
+for e in dtnr:
+    print(e, dtnr[e])
+
+cnts = {}
+
+for c in dtnr:
+    for e in dtnr[c]:
+        if e not in cnts:
+            cnts[e] = 1
+        else:
+            cnts[e] += 1
+
+for e in cnts:
+    print(e, cnts[e])
+
+i = 0
+
+while i < len(u):
+    if u[i] not in v:
+        v.append(u[i])
+    
+    for e in dtnr[u[i]]:
+        if e not in u:
+            u.append(e)
+    
+    print(v)
+    print(u)
+    print()
+    
+    i += 1

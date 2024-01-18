@@ -1,0 +1,25 @@
+tt = [0] * len(nl)
+
+vi, ac = set(), set([0])
+
+while len(ac) > 0:
+    mv, ix = -1, -1
+    
+    for i in ac:
+        if tt[i] > mv:
+            mv, ix = tt[i], i
+    
+    for e in nd[ix]:
+        if nl.index(e) not in vi:
+            tt[nl.index(e)] = max(tt[nl.index(e)], tt[i] + nd[ix][e])
+            
+            ac.add(nl.index(e))
+    
+    ac.remove(ix)
+    
+    vi.add(ix)
+    
+    for i in tt:
+        print(i, end = "\t")
+    
+    print()
