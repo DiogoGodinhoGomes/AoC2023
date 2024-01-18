@@ -1,0 +1,32 @@
+# --------------------------------------------------------------------------- #
+'''
+print(seed_ranges)
+print(maps)
+
+for i, seed_range in enumerate(seed_ranges[:1]):
+    print(seed_range)
+    
+    seed = seed_range[0]
+    top = sum(seed_range) - 1
+    
+    print(seed, "-->", top)
+    
+    index, new_seed = translate(seed, maps[0])
+    
+    print(index, new_seed)
+    
+    if top <= sum(maps[0][index - 1][1:]) - 1:
+        seed_ranges[i] = [translate(seed, maps[0]), seed_ranges[i][1]]
+    else:    
+        processed = sum(maps[0][index - 1][1:]) - seed
+        assert(processed >= 0)
+        
+        leftover = seed_ranges[i][1] - processed
+        assert(leftover >= 0)
+        
+        seed_ranges[i] = [translate(seed, maps[0]), processed]
+        
+        seed_ranges.append([seed + processed, leftover])
+
+print(seed_ranges)
+'''

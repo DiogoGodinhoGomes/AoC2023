@@ -1,0 +1,34 @@
+'''
+fc.write_path("path.txt", new_landmap)
+
+for y in range(len(new_landmap)):
+    i = 0
+    
+    while i < len(new_landmap) and new_landmap[y][i] == '.':
+        new_landmap[y][i] = '0'
+        
+        i += 1
+    
+    i = len(new_landmap[y]) - 1
+    
+    while i >= 0 and new_landmap[y][i] == '.':
+        new_landmap[y][i] = '0'
+        
+        i -= 1
+
+count = 0
+
+for row in new_landmap:
+    x = 0
+    
+    for i in row:
+        if i != '.':
+            if x == 0:
+                x = 1
+            elif x == 1:
+                x = 0
+        elif x == 1:
+            count += 1
+
+print(count)
+'''
